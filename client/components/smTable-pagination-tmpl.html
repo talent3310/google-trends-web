@@ -1,0 +1,55 @@
+<!-- <nav ng-if="numPages && pages.length >= 2">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" ng-click="selectPage(currentPage - 1)" href=""> Prev </a>
+    </li>
+    <li ng-repeat="page in pages" class="page-item" ng-class="{active: page==currentPage}">
+      <a href="#" class="page-link" ng-click="selectPage(page); $event.preventDefault(); $event.stopPropagation();">{{page}}</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" ng-click="selectPage(currentPage + 1)" href=""> Next </a>
+    </li>
+  </ul>
+</nav> -->
+<!-- <nav ng-if="numPages && pages.length >= 2">
+  <ul class="pagination">
+    <li ng-class=""><a ng-click="selectPage(1)">First</a></li>
+    <li ng-class=""><a ng-click="selectPage(currentPage-1)"><i class="fa fa-fw fa-angle-double-left"></i></a></li>
+    <li ng-repeat="page in pages" ng-class="{active: page==currentPage}"><a ng-click="selectPage(page)">{{page}}</a></li>
+    <li ng-class=""><a ng-click="selectPage(currentPage+1)"><i class="fa fa-fw fa-angle-double-right"></i></a></li>
+    <li ng-class=""><a ng-click="selectPage(numPages)">Last</a></li>
+  </ul>
+</nav>
+ -->
+<nav ng-if="pages.length >= 2">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" ng-click="selectPage(1)">First</a>
+    </li>
+    <li class="page-item"><a class="page-link" ng-click="selectPage(currentPage - 1)">&lt;</a>
+    </li>
+    <li class="page-item" style="    padding: 0px 5px;
+    background: white;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;">
+      <a>
+        <page-select></page-select> of {{numPages}}</a>
+    </li>
+    <li class="page-item"><a class="page-link" ng-click="selectPage(currentPage + 1)">&gt;</a>
+    </li class="page-item">
+    <li class="page-item"><a class="page-link" ng-click="selectPage(numPages)">Last</a></li>
+  </ul>
+</nav>
+<style type="text/css" media="screen">
+.select-page {
+  width: 50px;
+  text-align: center;
+}
+.pagination li a input {
+  padding: 4px;
+  margin: 1px 0;
+  border: 1px solid #52bcd363;
+}
+.pagination li a {
+  cursor: pointer;
+}
+</style>

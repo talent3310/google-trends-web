@@ -1,0 +1,14 @@
+<div class="modal-header">
+  <h4 class="modal-title"><i class="fa fa-picture-o"></i> Detail</h4>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="$ctrl.cancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <nvd3 options='$ctrl.nvd3.options' data='$ctrl.nvd3.data'></nvd3>
+  
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" ng-click="$ctrl.ok()">Ok</button>
+  <!-- <button type="button" class="btn btn-secondary" ng-click="$ctrl.cancel()">No</button> -->
+</div>

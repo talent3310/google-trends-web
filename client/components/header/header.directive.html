@@ -1,0 +1,53 @@
+<div class="header-block header-block-collapse d-lg-none d-xl-none">
+  <button class="collapse-btn" id="sidebar-collapse-btn">
+    <i class="fa fa-bars"></i>
+  </button>
+</div>
+<div ng-show="!type" id="m-history">
+  <!-- <b style="color: #52bcd3">History &nbsp;&nbsp;&nbsp;&nbsp;</b> -->
+  <span style="color: #52bcd3">past day</span> : {{$root.history.one}} ,<span style="color: #52bcd3">&nbsp;&nbsp;7 days</span> : {{$root.history.seven}} ,<span style="color: #52bcd3">&nbsp;&nbsp;30 days</span> : {{$root.history.thirty}}
+</div>
+<table class="table filterTable">
+  <tbody>
+    <tr>
+      <!--  <th width="40">type</th>
+    <td width="80">
+      <select ng-model="searchType" ng-options="item.name for item in searchTypes" ng-change="filterChanged()">
+        <option style="display:none" value=""><span>All</span></option>
+      </select>
+    </td> -->
+      <th width="40" ng-show="!type">date</th>
+      <td width="80" ng-show="!type">
+        <input type="date" name="input" ng-model="date" style="border: 1px solid #aaaaaa;" placeholder="yyyy-MM-dd" min="2017-12-26" max="{{today | date:'yyyy-MM-dd'}}" ng-change="filterChanged()" required />
+      </td>
+      <th width="40">period</th>
+      <td width="80">
+        <select ng-model="periodType" ng-options="item.name for item in periodTypes" ng-change="filterChanged()">
+          <option style="display:none" value=""><span>All</span></option>
+        </select>
+      </td>
+      <td class="text-right">
+        <div ng-show="!type" id="history">
+          <span style="color: #52bcd3">past day</span> : {{$root.history.one}} ,<span style="color: #52bcd3">&nbsp;&nbsp;7 days</span> : {{$root.history.seven}} ,<span style="color: #52bcd3">&nbsp;&nbsp;30 days</span> : {{$root.history.thirty}}
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th>category</th>
+      <td colspan="6">
+        <select ng-model="category" ng-options="item.name for item in categories" ng-change="categoryChange('a')">
+          <option style="display:none" value=""><span>All</span></option>
+        </select>
+        <select ng-model="sub_1" ng-options="item.name for item in category.children" ng-change="categoryChange('b')" ng-show="category.children.length">
+          <option style="display:none" value=""><span>{{nStr}}</span></option>
+        </select>
+        <select ng-model="sub_2" ng-options="item.name for item in sub_1.children" ng-change="categoryChange('c')" ng-show="sub_1.children.length">
+          <option style="display:none" value=""><span>{{nStr}}</span></option>
+        </select>
+        <select ng-model="sub_3" ng-options="item.name for item in sub_2.children" ng-show="sub_2.children.length">
+          <option style="display:none" value=""><span>{{nStr}}</span></option>
+        </select>
+      </td>
+    </tr>
+  </tbody>
+</table>

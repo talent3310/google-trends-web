@@ -1,0 +1,99 @@
+<div dw-loading="feedsLoading" dw-loading-options="{text: false}" style="position: fixed;top: 45%;left: 59%;z-index: 1;"></div>
+
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+<!-- <div class="sidebar-mobile-menu-handle" id="sidebar-mobile-menu-handle"></div> -->
+<div class="mobile-menu-handle"></div>
+ 
+
+<article class="content items-list-page">
+  <div filter-header call="$ctrl.filterCall(filterData)" type="'hides'"></div>
+  <section class="section">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card1">
+          <section class="example">
+            <div class="row">
+              <div class="col-md-5 col-sm-8 col-xs-8 keywordSearch">
+                <form class="form-inline numberOfPageForm" ng-submit="$ctrl.searchKeywordSubmit($ctrl.searchKeyword)">
+                  <input placeholder="keyword" ng-model="$ctrl.searchKeyword" class="moveTo">
+                  <button type="submit" class="btn btn-primary btn-sm" style="margin-top: 1px;">Search</button>
+                  &nbsp;&nbsp;<select ng-options="item.name for item in $ctrl.pageNums.availableOptions track by item.name" class="moveTo" style="padding: 2px" ng-model="$ctrl.pageNums.selectedOption" ng-change="$ctrl.pageNumChange($ctrl.pageNums.selectedOption)">
+                  </select><span style="color:#495057" id="pageLabel"> /page</span>
+                </form>
+              </div>
+              <div style="font-size: 14px" class="col-md-3 col-sm-6 col-xs-6 itmesNumber">
+                <span class="showNumbers">Showing</span> 
+                <b ng-if="$ctrl.tableState.pagination.numberOfPages && $ctrl.tableState.pagination.start != ($ctrl.tableState.pagination.numberOfPages - 1) * $ctrl.tablePerPageNum">{{$ctrl.tableState.pagination.start + 1}} - {{$ctrl.tableState.pagination.start + $ctrl.tablePerPageNum}}</b>
+                <b ng-if="$ctrl.tableState.pagination.start == ($ctrl.tableState.pagination.numberOfPages - 1) * $ctrl.tablePerPageNum">{{$ctrl.tableState.pagination.start + 1}} - {{$ctrl.numberOfItems}}</b>
+                 of <b>{{$ctrl.numberOfItems}}</b> <span class="showNumbers">items</span>
+              </div>
+              <form class="col-md-4 col-sm-4 col-xs-4 moveForm" ng-submit="$ctrl.unhide()">
+                <span class="moveTo">Unhide<span ng-if="$ctrl.selected.length">: {{$ctrl.selected.length}}</span></span>
+                <button type="submit" class="btn btn-primary btn-sm" style="margin-top: 1px;">Apply</button>
+              </form>
+                
+            </div>
+            <div style="height: 16px"></div>
+            <div style="font-size: 14px" id="m-itmesNumber">
+              <span class="showNumbers">Showing</span> 
+              <b ng-if="$ctrl.tableState.pagination.numberOfPages && $ctrl.tableState.pagination.start != ($ctrl.tableState.pagination.numberOfPages - 1) * $ctrl.tablePerPageNum">{{$ctrl.tableState.pagination.start + 1}} - {{$ctrl.tableState.pagination.start + $ctrl.tablePerPageNum}}</b>
+              <b ng-if="$ctrl.tableState.pagination.start == ($ctrl.tableState.pagination.numberOfPages - 1) * $ctrl.tablePerPageNum">{{$ctrl.tableState.pagination.start + 1}} - {{$ctrl.numberOfItems}}</b>
+               of <b>{{$ctrl.numberOfItems}}</b> <span class="showNumbers">items</span>
+            </div>
+            <div style="height: 10px"></div>
+            <div class="">
+              <table class="table dataTable datatable_2 table-striped" st-pipe="$ctrl.callServer" st-table="$ctrl.displayed">
+                <thead>
+                  <tr>          
+                    <!-- <th>select</th> -->
+                    <!-- <th>id</th> -->
+                    <th st-sort="keyword">Keword</th>
+                    <!-- <th>SearchType</th> -->
+                    <th class="">Category</th>
+                    <th class="">Period(days)</th>
+                    <th row-select-all="$ctrl.displayed"  selected="$ctrl.selected" ng-click="$ctrl.selectAll($ctrl.displayed)"></th>
+                  </tr>
+                </thead>
+                <tbody ng-show="!$ctrl.isLoading">
+                  <tr ng-repeat="row in $ctrl.displayed">                    
+                    <!-- <td>{{row._id}}</td> -->
+                    <td>{{row.keyword}}</td>
+                    <!-- <td><span ng-if="row.searchType == 'froogle'">google shopping</span><span ng-if="row.searchType != 'froogle'">{{row.searchType}}</span></td> -->
+                    <td class=""><span uib-popover="{{$ctrl.filterCategories(row)}}" popover-trigger="'mouseenter'" >{{row.category}}</span></td>
+                    <td class=""><span ng-if="row.periodMonth == 1">30</span><span ng-if="row.periodMonth == 3">90</span></td>
+                    <!-- <td>
+                      <ng-morris-Bar-chart
+                        chart-options="$ctrl.myBarChart.options"
+                        chart-data="row.graphInfo">
+                      </ng-morris-Bar-chart>
+                      <ng-sparkle-bar-chart chart-data="row.graphInfo"></ng-sparkle-bar-chart>
+                    </td> -->
+                    <td row-select="row"  ng-click="$ctrl.select(row._id)"></td>
+                  </tr>
+                </tbody>
+                <tbody ng-if="$ctrl.isLoading">
+                  <tr>
+                    <td colspan="8" class="text-center">Loading ... </td>
+                  </tr>
+                </tbody>
+                <tbody ng-if="!$ctrl.isLoading && !$ctrl.displayed.length">
+                  <tr>
+                    <td colspan="8" class="text-center">Empty Data</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td class="text-center" colspan="8">
+                      <div style="height: 20px"></div>
+                      <div st-items-by-page="$ctrl.tablePerPageNum" st-pagination="" st-template="./smTable-pagination-tmpl.html"></div>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+</article>

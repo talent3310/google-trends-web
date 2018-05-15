@@ -1,0 +1,4 @@
+# robotstxt.org
+
+User-agent: *
+http://jsfiddle.net/Hj6fB/241/

@@ -1,0 +1,88 @@
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+<!-- <div class="sidebar-mobile-menu-handle" id="sidebar-mobile-menu-handle"></div> -->
+<div class="mobile-menu-handle"></div>
+
+<article class="content forms-page">
+<div class="header-block header-block-collapse d-lg-none d-xl-none">
+  <button class="collapse-btn" id="sidebar-collapse-btn">
+    <i class="fa fa-bars"></i>
+  </button>
+</div>
+
+
+  <section class="section" style="margin-top: 90px;">
+    <div class="row sameheight-container">
+      <div class="col-md-6" style="margin:auto">
+        <div class="">
+          <div class="title-block">
+            <h3 class="title"> Change Password </h3>
+          </div>
+          <form class="form" name="form" ng-submit="vm.changePassword(form)" novalidate style="font-size: 14px;">
+            <div class="form-group">
+              <label class="control-label">Current Password</label>
+              <input type="password" name="password" class="form-control boxed" ng-model="vm.user.oldPassword" mongoose-error/>
+              <p class="help-block" ng-show="form.password.$error.mongoose">
+                {{ vm.errors.other }}
+              </p>
+            </div>
+            <div class="form-group">
+              <label class="control-label">New Password</label>
+              <input type="password" name="newPassword" class="form-control boxed" ng-model="vm.user.newPassword" ng-minlength="3" required/>
+              <p class="help-block" ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || vm.submitted)">
+                Password must be at least 3 characters.
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">Confirm New Password</label>
+              <input type="password" name="confirmPassword" class="form-control boxed" ng-model="vm.user.confirmPassword" match="vm.user.newPassword" ng-minlength="3" required=""/>
+              <p class="help-block" ng-show="form.confirmPassword.$error.match && vm.submitted">
+                Passwords must match.
+              </p>
+            </div>
+            <p class="help-block" style="color: #52bcd3"> {{ vm.message }} </p>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</article>
+
+<!-- <div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Change Password</h1>
+    </div>
+    <div class="col-sm-12">
+      <form class="form" name="form" ng-submit="vm.changePassword(form)" novalidate>
+        <div class="form-group">
+          <label>Current Password</label>
+          <input type="password" name="password" class="form-control" ng-model="vm.user.oldPassword" mongoose-error/>
+          <p class="help-block" ng-show="form.password.$error.mongoose">
+            {{ vm.errors.other }}
+          </p>
+        </div>
+        <div class="form-group">
+          <label>New Password</label>
+          <input type="password" name="newPassword" class="form-control" ng-model="vm.user.newPassword" ng-minlength="3" required/>
+          <p class="help-block" ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || vm.submitted)">
+            Password must be at least 3 characters.
+          </p>
+        </div>
+        <div class="form-group">
+          <label>Confirm New Password</label>
+          <input type="password" name="confirmPassword" class="form-control" ng-model="vm.user.confirmPassword" match="vm.user.newPassword" ng-minlength="3" required="" />
+          <p class="help-block" ng-show="form.confirmPassword.$error.match && vm.submitted">
+            Passwords must match.
+          </p>
+        </div>
+        <p class="help-block"> {{ vm.message }} </p>
+        <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
+      </form>
+    </div>
+  </div>
+</div>
+ -->

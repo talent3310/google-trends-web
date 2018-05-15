@@ -1,0 +1,114 @@
+<div dw-loading="feedsLoading" dw-loading-options="{text: false}" style="position: fixed;top: 45%;left: 59%;z-index: 1;"></div>
+
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+<!-- <div class="sidebar-mobile-menu-handle" id="sidebar-mobile-menu-handle"></div> -->
+<div class="mobile-menu-handle"></div>
+
+
+<article class="content items-list-page">
+  <div filter-header call="$ctrl.filterCall(filterData)" type=""></div>
+  <section class="section">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card1">
+          <section class="example">
+            <div class="row">
+              <div class="col-md-5 col-sm-8 col-xs-8 keywordSearch">
+                <form class="form-inline numberOfPageForm" ng-submit="$ctrl.searchKeywordSubmit($ctrl.searchKeyword)">
+                  <input placeholder="keyword" ng-model="$ctrl.searchKeyword" class="moveTo">
+                  <button type="submit" class="btn btn-primary btn-sm" style="margin-top: 1px;">Search</button>
+                  &nbsp;&nbsp;<select ng-options="item.name for item in $ctrl.pageNums.availableOptions track by item.name" id='perPageNumber' class="moveTo" style="padding: 2px" ng-model="$ctrl.pageNums.selectedOption" ng-change="$ctrl.pageNumChange($ctrl.pageNums.selectedOption)">
+                  </select><span style="color:#495057" id="pageLabel"> /page</span>
+                </form>
+              </div>             
+              <div style="font-size: 14px" class="col-md-3 col-sm-6 col-xs-6 itmesNumber">
+                <span class="showNumbers">Showing</span> 
+                <b ng-if="$ctrl.tableState.pagination.numberOfPages && $ctrl.tableState.pagination.start != ($ctrl.tableState.pagination.numberOfPages - 1) * $ctrl.tablePerPageNum">{{$ctrl.tableState.pagination.start + 1}} - {{$ctrl.tableState.pagination.start + $ctrl.tablePerPageNum}}</b>
+                <b ng-if="$ctrl.tableState.pagination.start == ($ctrl.tableState.pagination.numberOfPages - 1) * $ctrl.tablePerPageNum">{{$ctrl.tableState.pagination.start + 1}} - {{$ctrl.numberOfItems}}</b>
+                 of <b>{{$ctrl.numberOfItems}}</b> <span class="showNumbers">items</span>
+              </div>
+              <form class="col-md-4 col-sm-4 col-xs-4 moveForm">
+                <!-- <select ng-model="category" ng-options="item.name for item in $ctrl.moveTypes" class="moveTo" style="padding: 2px" required>
+                  <option style="display:none" value=""><span>move to:&nbsp;&nbsp;&nbsp;&nbsp;</span></option>
+                </select> -->
+                <button type="button" ng-click="$ctrl.moveSubmit('hidden')" class="btn btn-danger btn-sm" style="margin-top: 1px;">Hide</button>
+                <button type="button" ng-click="$ctrl.moveSubmit('monitor')" class="btn btn-green btn-sm" style="margin-top: 1px;">Monitor</button>
+              </form>         
+            </div>
+            <div style="height: 16px"></div>
+            <div style="font-size: 14px" id="m-itmesNumber">
+              <span class="showNumbers">Showing</span> 
+              <b ng-if="$ctrl.tableState.pagination.numberOfPages && $ctrl.tableState.pagination.start != ($ctrl.tableState.pagination.numberOfPages - 1) * $ctrl.tablePerPageNum">{{$ctrl.tableState.pagination.start + 1}} - {{$ctrl.tableState.pagination.start + $ctrl.tablePerPageNum}}</b>
+              <b ng-if="$ctrl.tableState.pagination.start == ($ctrl.tableState.pagination.numberOfPages - 1) * $ctrl.tablePerPageNum">{{$ctrl.tableState.pagination.start + 1}} - {{$ctrl.numberOfItems}}</b>
+               of <b>{{$ctrl.numberOfItems}}</b> <span class="showNumbers">items</span>
+            </div>
+            <div style="height: 10px"></div>
+            <div class="">
+              <table class="table dataTable dataTable_1 table-striped" st-pipe="$ctrl.callServer" st-table="$ctrl.displayed">
+                <thead>
+                  <tr>
+                    
+                    <!-- <th>id</th> -->
+                    <th st-sort="keyword">Keyword</th>
+                    <th class="m-google">Trends</th>
+                    <th st-sort="graphRanking">Stats</th>
+                    <!-- <th>Graph Ranking</th> -->
+                    <!-- <th ng-if="$ctrl.filterData.category.name == 'Home & Garden'">Count</th> -->
+                    <!-- <th>SearchType</th> -->
+                    <th class="m-category">Category</th>
+                    <th class="m-period">Period(days)</th>
+                    <th class="m-updatedAt">UpdatedAt</th>
+                    <th row-select-all="$ctrl.displayed"  selected="$ctrl.selected" ng-click="$ctrl.selectAll($ctrl.displayed)"></th>
+                  </tr>
+                </thead>
+                <tbody ng-show="!$ctrl.isLoading">
+                  <tr ng-repeat="row in $ctrl.displayed track by $index">
+                    
+                    <!-- <td>{{row._id}}</td> -->
+                    <td keyword-link row = "row"></td>
+                    <td kewword-link-google row = "row" class="m-google"></td>
+                    <td ng-dblclick="$ctrl.openModal(row)" class="stats">
+                      <ng-sparkle-bar-chart chart-data="row.graphInfo"></ng-sparkle-bar-chart>
+                    </td>
+                    <!-- <td>
+                      <graph-ranking data="row"></graph-ranking>
+                    </td> -->
+                    <!-- <td ng-if="$ctrl.filterData.category.name == 'Home & Garden'">
+                      {{row.count}}
+                     
+                     
+                    </td> -->
+                    <!-- <td><span ng-if="row.searchType == 'froogle'">google shopping</span><span ng-if="row.searchType != 'froogle'">{{row.searchType}}</span></td> -->
+                    <td class="m-category"><span uib-popover="{{$ctrl.filterCategories(row)}}" popover-trigger="'mouseenter'" >{{row.category}}</span></td>
+                    <td class="m-period"><span ng-if="row.periodMonth == 1">30</span><span ng-if="row.periodMonth == 3">90</span></td>
+                    <td class="m-updatedAt">{{row.createdAt | limitTo: 10 }}</td>
+                    <td row-select="row"  ng-click="$ctrl.select(row._id)"></td>
+                  </tr>
+                </tbody>
+                <tbody ng-if="$ctrl.isLoading">
+                  <tr>
+                    <td colspan="10" class="text-center" style="padding: 0.75rem">Loading ... </td>
+                  </tr>
+                </tbody>
+                <tbody ng-if="!$ctrl.isLoading && !$ctrl.displayed.length">
+                  <tr>
+                    <td colspan="10" class="text-center" style="padding: 0.75rem">Empty Data</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td class="text-center" colspan="10">
+                      <div style="height: 20px"></div>
+                      <div st-items-by-page="$ctrl.tablePerPageNum" st-pagination="" st-template="./smTable-pagination-tmpl.html"></div>
+                      <!--../../components/smTable-pagination-tmpl.html -->
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+</article>
